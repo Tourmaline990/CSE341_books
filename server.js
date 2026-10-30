@@ -1,6 +1,28 @@
+
+
 import { app } from "./app.js";
+import { connectToDb } from "./src/db/connect.js";
+
 
 const PORT = process.env.PORT;
 if(!PORT){throw new Error("Port not found")};
 
-app.listen(PORT,() => {return console.log(`server listening at  127.0.0.1:${PORT}`)})
+const startServer = async () => {
+    try {
+        await connectToDb();
+        const db = getDb();
+
+        console.log('Database:', db.databaseName);
+        console.log('Collections:', await db.listCollections().toArray());
+        app.listen(  PORT,() => {
+            console.log(`server listening at  127.0.0.1:${PORT}`)
+        }
+        )
+    } catch (error) {
+        console.error("Database connection failed",error.message)
+        process.exit(1)
+    }
+}
+
+await startServer()
+
