@@ -3,15 +3,30 @@ import { MongoClient } from "mongodb";
 let database;
 
 const connectToDb = async () => {
+  try {
     const connectionString = process.env.MONGODB_URL;
-    if(!connectionString){
-      throw new Error('Mongo_db url is required');
+
+    if (!connectionString) {
+      throw new Error('MONGODB_URL is required.');
     }
+
     const client = new MongoClient(connectionString);
+
+    console.log("Client created");
+
     await client.connect();
-    database = await client.db(process.env.DB_USERNAME || 'practice')
+
+    console.log("Client connected");
+
+    database = client.db(process.env.DB_NAME || 'Practice');
+
     return database;
-}
+
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    throw error;
+  }
+};
 
 const getDb = () => {
     if(!database){
