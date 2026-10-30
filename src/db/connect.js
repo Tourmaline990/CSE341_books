@@ -12,11 +12,9 @@ const connectToDb = async () => {
 
     const client = new MongoClient(connectionString);
 
-    console.log("Client created");
 
     await client.connect();
 
-    console.log("Client connected");
 
     database = client.db(process.env.DB_NAME || 'Practice');
 
