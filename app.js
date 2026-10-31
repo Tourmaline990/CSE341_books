@@ -1,25 +1,17 @@
 import express from "express";
-import { getDb} from "./src/db/connect.js";
-
+import router from "./src/router.js";
 
 const app = express();
 
+// middlewares
 app.use(express.json());
+app.use(router)
+
 
 app.get("/", (req,res) => {
    return res.status(200).json({"course":"cse341"})
 })
 
-app.get("/trails",async(req,res) => {
-   try {
-      const data =  await getDb().collection("trails").find({}).toArray();
-      console.log(data)
-      return res.status(200).json(data)
-   } catch (error) {
-      console.log("Error", error)
-      return res.status(500).json({message: "Failed to retrieve message"});
-   }
-   
-})
+
 
 export {app} 
