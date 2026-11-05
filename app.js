@@ -5,6 +5,11 @@ import swaggerDocument from "./swagger.json" with { type: "json" };
 
 const app = express();
 
+app.use((req, res, next) => {
+    console.log("Incoming request:", req.method, req.url);
+    next();
+});
+
 // middlewares
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());

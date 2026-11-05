@@ -38,16 +38,22 @@
           {
             "in": "path",
             "name": "id",
+            "required": true,
             "schema": {
-              "type": "string",
-              "required": true
+              "type": "string"
             }
           }
         ],
         "responses": {
-          "200": "description:Book returned successfully",
-          "404": "description:Book not found",
-          "500": "description:Internal server error"
+          "200": {
+            "description": "Book returned successfully"
+          },
+          "404": {
+            "description": "Book not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
         }
       }
     }
