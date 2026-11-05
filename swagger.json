@@ -31,7 +31,9 @@
     "/books/{id}": {
       "get": {
         "summary": "Get book by ID",
-        "tags": "-Books",
+        "tags": [
+          "Books"
+        ],
         "parameters": [
           {
             "in": "path",

@@ -47,7 +47,7 @@ router.get("/books", getBooksHandler);
  *   get:
  *     summary: Get book by ID
  *     tags:
- *      -Books
+ *      - Books
  *     parameters:
  *      - in: path
  *        name: id
