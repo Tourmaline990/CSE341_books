@@ -180,7 +180,7 @@ Success:
 Errors: 
 `400` if a required field is missing or invalid
 `404` if no author exists with that id
-`500` if an unexpeccted server error occurs
+`500` if an unexpected server error occurs
 
 #### DELETE /authors/:id
 Purpose: Delete an existing author
