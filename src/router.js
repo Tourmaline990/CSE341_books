@@ -1,5 +1,7 @@
 import express from "express";
-import { getBooksHandler,getBookByIdHandler } from "./controllers/books.js";
+import { getBooksHandler,getBookByIdHandler,
+createBookHandler,updateBookHandler,deleteBookHandler, bookValidationRules, bookUpdateValidationRules
+ } from "./controllers/books.js";
 import { getAllAuthorsHandler ,getAuthorByIdHandler,authorValidationRules,createAuthorHandler,
     updateAuthorHandler,authorUpdateValidationRules,deleteAuthorHandler
 } from "./controllers/authors.js";
@@ -179,5 +181,107 @@ router.put("/authors/:id", authorUpdateValidationRules, updateAuthorHandler);
  *         description: Internal server error
  */
 router.delete("/authors/:id", deleteAuthorHandler);
+
+/**
+ * @openapi
+ * /books:
+ *   post:
+ *     summary: Create a new book
+ *     tags:
+ *       - Books
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *               title:
+ *                 type: string
+ *               authorId:
+ *                 type: string
+ *               publicationDate:
+ *                 type: string
+ *             required:
+ *               - id
+ *               - title
+ *               - authorId
+ *               - publicationDate
+ *     responses:
+ *       201:
+ *         description: Book created successfully
+ *       400:
+ *         description: Bad request
+ *       409:
+ *         description: Conflict - Book with this ID already exists
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/books", bookValidationRules, createBookHandler);
+
+/**
+ * @openapi
+ * /books/{id}:
+ *   put:
+ *     summary: Update an existing book
+ *     tags:
+ *       - Books
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               authorId:
+ *                 type: string
+ *               publicationDate:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Book updated successfully
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Book not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put("/books/:id", bookUpdateValidationRules, updateBookHandler);
+
+/**
+ * @openapi
+ * /books/{id}:
+ *   delete:
+ *     summary: Delete a book
+ *     tags:
+ *       - Books
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+*       204:
+*         description: Book deleted successfully
+*       400:
+*         description: Bad request
+*       404:
+*         description: Book not found
+*       500:
+*         description: Internal server error
+*/
+router.delete("/books/:id", deleteBookHandler);
 
 export default router;

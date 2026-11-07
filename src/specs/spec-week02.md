@@ -62,7 +62,7 @@ Success:
 
 Errors:
 - `400` if a required field is missing
-- `400` if the `id` already exists
+- `409` if the `id` already exists
 - `400` if the `authorId` does not match an existing author
 - `500` if an unexpected server or database error occurs
 
